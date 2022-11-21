@@ -15,6 +15,8 @@ class CreateSugerenciasTable extends Migration
     {
         Schema::create('sugerencias', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('empresaId')->references('id')->on('empresas');
+            $table->string('mensaje');
             $table->timestamps();
         });
     }

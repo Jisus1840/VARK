@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SugerenciaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+
+
+// ruta para exporta el excel de sugerencias
+Route::get('/sugerencias/export', [SugerenciaController::class, 'export']);
+// ruta para el formulario de sugerencias
+Route::get('/sugerencias', [SugerenciaController::class, 'index'])->name("sugerencias.index");

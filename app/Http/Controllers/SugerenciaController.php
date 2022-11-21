@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\sugerencia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+use App\Exports\SugerenciasExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SugerenciaController extends Controller
 {
@@ -15,6 +19,8 @@ class SugerenciaController extends Controller
     public function index()
     {
         //
+
+        return view("");
     }
 
     /**
@@ -81,5 +87,10 @@ class SugerenciaController extends Controller
     public function destroy(sugerencia $sugerencia)
     {
         //
+    }
+
+    public function export() 
+    {
+        return Excel::download(new SugerenciasExport, 'sugerencias.xlsx');
     }
 }
