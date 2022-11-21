@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::get('formularioPersonalidad', function () {
     return view('formularioPersonalidad');
 })->name('formularioPersonalidad');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
