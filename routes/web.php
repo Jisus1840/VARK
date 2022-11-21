@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('formularioVARK');
 });
+
+Route::get('formularioPersonalidad', function () {
+    return view('formularioPersonalidad');
+})->name('formularioPersonalidad');
