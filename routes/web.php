@@ -33,6 +33,7 @@ Route::get('contacto', function () {
 Route::get('formularioVARK', function () {
     return view('formularioVARK');
 })->name('formularioVARK');
+
 Route::get('formularioPersonalidad', function () {
     return view('formularioPersonalidad');
 })->name('formularioPersonalidad');
