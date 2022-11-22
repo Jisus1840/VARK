@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Exports\SugerenciasExport;
+use App\Http\Requests\SugerenciaRequest;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SugerenciaController extends Controller
@@ -20,7 +21,6 @@ class SugerenciaController extends Controller
     {
         //
 
-        return view("");
     }
 
     /**
@@ -31,6 +31,8 @@ class SugerenciaController extends Controller
     public function create()
     {
         //
+        return view("sugerencias.create");
+
     }
 
     /**
@@ -39,9 +41,12 @@ class SugerenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SugerenciaRequest $request)
     {
         //
+        $validated = $request->validated();
+        $sugerencia = sugerencia::create($validated);
+        return response('sugerencia enviada',200);
     }
 
     /**

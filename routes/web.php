@@ -33,4 +33,10 @@ require __DIR__.'/auth.php';
 // ruta para exporta el excel de sugerencias
 Route::get('/sugerencias/export', [SugerenciaController::class, 'export']);
 // ruta para el formulario de sugerencias
-Route::get('/sugerencias', [SugerenciaController::class, 'index'])->name("sugerencias.index");
+
+Route::resources([
+    '/sugerencias' => SugerenciaController::class,
+]);
+
+// Route::get('/sugerencias', [SugerenciaController::class, 'create'])->name("sugerencias.create");
+// Route::get('/sugerencias', [SugerenciaController::class, 'create'])->name("sugerencias.store");
