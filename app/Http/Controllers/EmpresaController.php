@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\empresa;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller
 {
@@ -15,6 +17,9 @@ class EmpresaController extends Controller
     public function index()
     {
         //
+        $empresas = empresa::all();
+        return view("empresas.index", compact("empresas"));
+        
     }
 
     /**
@@ -67,9 +72,12 @@ class EmpresaController extends Controller
      * @param  \App\Models\empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function edit(empresa $empresa)
+    public function edit(int $id)
     {
         //
+        $empresa = empresa::findOrFail($id);
+
+        return view('empresas.edit', compact("empresa"));
     }
 
     /**
@@ -79,9 +87,12 @@ class EmpresaController extends Controller
      * @param  \App\Models\empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, empresa $empresa)
+    public function update(Request $request, int $id)
     {
-        //
+            DB::table('empresas')
+            ->where('id', $id)
+            ->update(['nombre_empresa' => $request->nombre_empresa]);
+        return redirect()->back()->with(["mensaje"=>"actualizado con exito"]);
     }
 
     /**
@@ -90,8 +101,9 @@ class EmpresaController extends Controller
      * @param  \App\Models\empresa  $empresa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(empresa $empresa)
+    public function destroy(int $id)
     {
-        //
+        empresa::findOrFail($id)->delete();
+        return redirect()->back()->with(["mensaje"=>"eliminado con exito"]);
     }
 }
