@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FormularioVark;
 use App\Http\Requests\FormularioVarkRequest;
+use App\Models\vark;
 
 class FormularioVarkController extends Controller
 {
@@ -50,7 +51,7 @@ class FormularioVarkController extends Controller
         $a = $arreglo->sortDesc()->keys()->first();
         // dd($a);
         // $validated = $request->validated();
-        $formularioVark = FormularioVark::create(['respuesta' => $a, 'userId' => '1']);
+        $formularioVark = FormularioVark::create(['folio' => '0001' ,'respuesta' => $a, 'userId' => '1']);
         return response()->json($formularioVark);
     }
 
@@ -97,5 +98,14 @@ class FormularioVarkController extends Controller
     public function destroy(FormularioVark $formularioVark)
     {
         //
+    }
+
+    public function varkGraph() {
+        $data = vark::join('users', 'users.id', '=', 'varks.userId')->selectRaw('varks.respuesta, count(*) as total')->groupBy('varks.respuesta')->get();
+
+        $labels = $data->pluck('respuesta');
+        $total = $data->pluck('total');
+
+        return response()->json([$labels, $total]);
     }
 }
