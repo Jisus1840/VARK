@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FormularioVark;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Requests\FormularioVarkRequest;
 
 class FormularioVarkController extends Controller
@@ -50,7 +51,10 @@ class FormularioVarkController extends Controller
         $a = $arreglo->sortDesc()->keys()->first();
         // dd($a);
         // $validated = $request->validated();
-        $formularioVark = FormularioVark::create(['respuesta' => $a, 'userId' => '1']);
+        $formularioVark = FormularioVark::create(['respuesta' => $a, 'userId' => Auth()->user()->id]);
+
+        // $pdf = $this->generarPdfVARK($formularioVark->id);
+
         return response()->json($formularioVark);
     }
 
@@ -97,5 +101,25 @@ class FormularioVarkController extends Controller
     public function destroy(FormularioVark $formularioVark)
     {
         //
+    }
+
+    public function generarPdfVARK($id)
+    {
+        $data = FormularioVark::select(
+            'varks.id',
+            'name',
+            'respuesta'
+        )
+            ->join('users', 'users.id', '=', 'varks.userId')
+            ->find($id);
+
+        $nombreArchivo = 'FormularioVARK' . $data['name'] . '' . $data['id'];
+
+        $dompdf = Pdf::loadView("generarPdfVARK", [
+            "nombre" => $data['name'],
+            "respuesta" => $data['respuesta']
+        ])->save("../public/docs/{$nombreArchivo}");
+
+        return $dompdf->stream($nombreArchivo);
     }
 }

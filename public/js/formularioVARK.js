@@ -22,6 +22,7 @@ document.getElementById("enviar_formulario").onclick = async () => {
     const req = await fetch(url, init)
 
     if (req.ok) {
+        let flag = false;
         const res = await req.json()
         if (res.respuesta == 'V') {
             Swal.fire({
@@ -32,8 +33,7 @@ document.getElementById("enviar_formulario").onclick = async () => {
                 imageHeight: 200,
                 imageAlt: 'Custom image',
             });
-            form.reset();
-            return;
+            flag = true;
         }
         if (res.respuesta == 'A') {
             Swal.fire({
@@ -44,8 +44,7 @@ document.getElementById("enviar_formulario").onclick = async () => {
                 imageHeight: 200,
                 imageAlt: 'Custom image',
             })
-            form.reset();
-            return;
+            flag = true;
         }
         if (res.respuesta == 'R') {
             Swal.fire({
@@ -56,8 +55,7 @@ document.getElementById("enviar_formulario").onclick = async () => {
                 imageHeight: 200,
                 imageAlt: 'Custom image',
             })
-            form.reset();
-            return;
+            flag = true;
         }
         if (res.respuesta == 'K') {
             Swal.fire({
@@ -68,8 +66,11 @@ document.getElementById("enviar_formulario").onclick = async () => {
                 imageHeight: 200,
                 imageAlt: 'Custom image',
             })
-            form.reset();
-            return;
+            flag = true;
+        }
+        if (flag) {
+            window.open(route('generarPdfVARK', res.id));
+            // form.reset();
         }
     } else {
         Swal.fire({

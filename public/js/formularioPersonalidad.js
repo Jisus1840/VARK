@@ -557,6 +557,8 @@ async function resultado() {
         modal.handleUpdate();
 
 
+        window.open(route('generarPdfPersonalidad', res.id));
+
     } else {
         Swal.fire({
             icon: 'error',

@@ -27,7 +27,7 @@ Route::get('/', function () {
 // });
 
 Route::get('/', [AuthenticatedSessionController::class, 'create'])
-->name('login');
+    ->name('login');
 
 Route::get('contacto', function () {
     return view('contacto');
@@ -49,7 +49,12 @@ Route::get('/admin', function () {
     return view('/admin');
 })->middleware(['auth'])->name('/admin');
 
-require __DIR__.'/auth.php';
+
+Route::get('generaraPdfVARK/{id}', [FormularioVarkController::class, 'generarPdfVARK'])->name('generarPdfVARK');
+
+Route::get('generarPdfPersonalidad/{id}', [FormularioPersonalidadController::class, 'generarPdfPersonalidad'])->name('generarPdfPersonalidad');
+
+require __DIR__ . '/auth.php';
 
 
 

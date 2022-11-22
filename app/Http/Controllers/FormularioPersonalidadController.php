@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FormularioPersonalidad;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\FormularioPersonalidad;
 
 class FormularioPersonalidadController extends Controller
 {
@@ -36,10 +37,12 @@ class FormularioPersonalidadController extends Controller
     public function store(Request $request)
     {
         $validar = $request->validate(['resultado' => ['regex:/(E|I)(S|N)(T|F)(J|P)/']]);
-        $validar['userId'] = 1;
+        $validar['userId'] = Auth()->user()->id;
         // dd($validar);
-        FormularioPersonalidad::create($validar);
-        return response()->json($validar);
+        $data = FormularioPersonalidad::create($validar);
+
+        // $this->generarPdfPersonalidad($data->id);
+        return response()->json($data);
     }
 
     /**
@@ -85,5 +88,25 @@ class FormularioPersonalidadController extends Controller
     public function destroy(FormularioPersonalidad $formularioPersonalidad)
     {
         //
+    }
+
+    public function generarPdfPersonalidad($id)
+    {
+        $data = FormularioPersonalidad::select(
+            'personalidades.id',
+            'name',
+            'resultado'
+        )
+            ->join('users', 'users.id','personalidades.userId')
+            ->find($id);
+
+        $nombreArchivo = 'FormularioPersonalidad' . $data['name'] . '' . $data['id'];
+
+        $dompdf = Pdf::loadView("generarPdfPersonalidad", [
+            "nombre" => $data['name'],
+            "resultado" => $data['resultado']
+        ])->save("../public/docs/{$nombreArchivo}");
+
+        return $dompdf->stream($nombreArchivo);
     }
 }
