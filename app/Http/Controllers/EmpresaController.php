@@ -83,7 +83,8 @@ class EmpresaController extends Controller
     public function update(Request $request, int $id)
     {
         request()->validate(['nombre_empresa' => 'required|min:3']);
-            DB::table('empresas')
+
+        DB::table('empresas')
             ->where('id', $id)
             ->update(['nombre_empresa' => $request->nombre_empresa]);
         return redirect()->back()->with(["mensaje"=>"actualizado con exito"]);

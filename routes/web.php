@@ -42,7 +42,7 @@ require __DIR__.'/auth.php';
 
 
 // ruta para exporta el excel de sugerencias
-Route::get('/sugerencias/export', [SugerenciaController::class, 'export']);
+Route::get('/sugerencias/export', [SugerenciaController::class, 'export'])->name('descargar.sugerencia');
 // ruta para el formulario de sugerencias
 
 Route::resources([
