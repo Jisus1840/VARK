@@ -5,6 +5,8 @@
     Sugerencia
 @endsection
 
+@include('navbar')
+
 @section('content')
     {{-- Contenido --}}
     <div class="container mt-3">

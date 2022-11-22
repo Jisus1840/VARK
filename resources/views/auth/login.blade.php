@@ -47,6 +47,7 @@
                     </a>
                 @endif
 
+                <a class="btn btn-primary my-2 text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}" style="margin-left:10px">Registrarse</a>
                 <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>

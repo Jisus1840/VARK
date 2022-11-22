@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\FormularioVark;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Requests\FormularioVarkRequest;
+use App\Models\vark;
 
 class FormularioVarkController extends Controller
 {
@@ -55,6 +56,7 @@ class FormularioVarkController extends Controller
 
         // $pdf = $this->generarPdfVARK($formularioVark->id);
 
+        $formularioVark = FormularioVark::create(['folio' => '0001', 'respuesta' => $a, 'userId' => '1']);
         return response()->json($formularioVark);
     }
 
@@ -121,5 +123,15 @@ class FormularioVarkController extends Controller
         ])->save("../public/docs/{$nombreArchivo}");
 
         return $dompdf->stream($nombreArchivo);
+    }
+
+    public function varkGraph()
+    {
+        $data = vark::join('users', 'users.id', '=', 'varks.userId')->selectRaw('varks.respuesta, count(*) as total')->groupBy('varks.respuesta')->get();
+
+        $labels = $data->pluck('respuesta');
+        $total = $data->pluck('total');
+
+        return response()->json([$labels, $total]);
     }
 }

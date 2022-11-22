@@ -2,22 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\FormularioVarkController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\PersonalidadController;
 use App\Http\Controllers\SugerenciaController;
 use App\Http\Controllers\UserEmpresaController;
-use App\Http\Controllers\FormularioVarkController;
 use App\Http\Controllers\FormularioPersonalidadController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('formularioVARK');
@@ -28,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/', [AuthenticatedSessionController::class, 'create'])
     ->name('login');
+
 
 Route::get('contacto', function () {
     return view('contacto');
@@ -40,14 +33,16 @@ Route::get('contacto', function () {
 Route::get('formularioVARK', function () {
     return view('formularioVARK');
 })->name('formularioVARK');
+Route::get('formularioPersonalidad', function () {
+    return view('formularioPersonalidad');
+})->name('formularioPersonalidad');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/admin', function () {
-    return view('/admin');
-})->middleware(['auth'])->name('/admin');
+Route::get('/sugerencias/export', [SugerenciaController::class, 'export'])->name('descargar.sugerencia');
+// ruta para el formulario de sugerencias
 
 
 Route::get('generaraPdfVARK/{id}', [FormularioVarkController::class, 'generarPdfVARK'])->name('generarPdfVARK');
@@ -55,12 +50,19 @@ Route::get('generaraPdfVARK/{id}', [FormularioVarkController::class, 'generarPdf
 Route::get('generarPdfPersonalidad/{id}', [FormularioPersonalidadController::class, 'generarPdfPersonalidad'])->name('generarPdfPersonalidad');
 
 require __DIR__ . '/auth.php';
+// Ruta para la grafica de vark por individuo
+Route::get('/vark_grafica', [FormularioVarkController::class, 'varkGraph'])->name('vark.graph');
+
+// Ruta para la grafica de personalidad por individuo
+Route::get('/personalidad_grafica', [PersonalidadController::class, 'myersBriggsGraph'])->name('myersBriggs.graph');
+
+// Ruta para la grafica grupal VARK y personalidad
+Route::get('grafica_grupal', [PersonalidadController::class, 'graph'])->name('graph');
 
 
+require __DIR__.'/auth.php';
 
-// ruta para exporta el excel de sugerencias
-Route::get('/sugerencias/export', [SugerenciaController::class, 'export'])->name('descargar.sugerencia');
-// ruta para el formulario de sugerencias
+
 
 Route::resources([
     '/sugerencias' => SugerenciaController::class,
@@ -68,6 +70,7 @@ Route::resources([
     '/empresas' => EmpresaController::class,
     '/empresasUser' => UserEmpresaController::class,
     'formularioPersonalidad' => FormularioPersonalidadController::class,
+    '/empresasUser' => UserEmpresaController::class
 ]);
 
 // Route::get('/sugerencias', [SugerenciaController::class, 'create'])->name("sugerencias.create");
