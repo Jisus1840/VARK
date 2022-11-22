@@ -24,6 +24,14 @@
                         {{ __('Asignar Empresa') }}
                     </x-nav-link>
 
+
+                    <x-nav-link :href="route('formularioVARK')" :active="request()->routeIs('formularioVARK')">
+                        {{ __('Tests de VARK') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('formularioPersonalidad.index')" :active="request()->routeIs('formularioPersonalidad.index')">
+                        {{ __('Test de Personalidad') }}
+                    </x-nav-link>
+
                     @if(Auth()->user()->isAdmin == 1)
                     <x-nav-link :href="route('descargar.sugerencia')" :active="request()->routeIs('descargar.sugerencia')">
                         {{ __('descargar suguerencias') }}
