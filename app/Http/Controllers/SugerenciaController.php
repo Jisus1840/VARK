@@ -32,7 +32,6 @@ class SugerenciaController extends Controller
     {
         //
         return view("sugerencias.create");
-
     }
 
     /**
@@ -41,12 +40,31 @@ class SugerenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SugerenciaRequest $request)
+    public function store(Request $request)
     {
-        //
-        $validated = $request->validated();
-        $sugerencia = sugerencia::create($validated);
-        return response('sugerencia enviada',200);
+        $request->validate([
+            'empresaId' => 'required',
+            'mensaje' => 'required',
+            'g-recaptcha-response' => ['required', 'string', function ($attribute, $value, $fail) {
+                $secretKey = config('services.recaptcha.secret');
+                $response = $value;
+                $userIP = $_SERVER['REMOTE_ADDR'];
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response&remoteip=$userIP";
+                $response = \file_get_contents($url);
+                $response = json_decode($response);
+
+                if (!$response->success) {
+                    $fail($attribute . ' fallo el google reCaptcha, eres un robot!!');
+                }
+            }]
+        ]);
+
+        $sugerencia = sugerencia::create([
+            'empresaId' => $request->empresaId,
+            'mensaje' => $request->mensaje
+        ]);
+
+        return response('sugerencia enviada', 200);
     }
 
     /**
@@ -94,7 +112,7 @@ class SugerenciaController extends Controller
         //
     }
 
-    public function export() 
+    public function export()
     {
         return Excel::download(new SugerenciasExport, 'sugerencias.xlsx');
     }

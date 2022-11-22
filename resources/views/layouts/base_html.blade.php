@@ -28,7 +28,8 @@
 
     {{-- ESTILOS PROPIOS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+    {{-- google captcha --}}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>

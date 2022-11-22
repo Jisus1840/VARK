@@ -17,6 +17,8 @@
                 <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
             </div>
 
+            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.key') }}"></div>
+            <br/>
 
         <input type="submit" value="enviar">
         </form>
