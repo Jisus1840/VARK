@@ -8,7 +8,7 @@ Formulario VARK
 @section('content')
 {{-- Contenido --}}
 
-
+@include('navbar')
 
 <div class="p-5 m-5 sombrita">
 
