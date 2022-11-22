@@ -12,7 +12,8 @@
         <form action="{{ route('sugerencias.store') }}" method="POST" novalidate>
            @csrf
             <div>
-                <input type="text" name="empresaId" id="empresaId" value="1">
+                
+                <input type="text" hidden name="empresaId" id="empresaId" value="{{ $empresa->id }}">
                 <h1>Sugerencia</h1>
                 <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
             </div>

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\FormularioVarkController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\SugerenciaController;
+use App\Http\Controllers\UserEmpresaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/admin', function () {
+    return view('/admin');
+})->middleware(['auth'])->name('/admin');
+
 require __DIR__.'/auth.php';
 
 
@@ -42,6 +48,8 @@ Route::get('/sugerencias/export', [SugerenciaController::class, 'export']);
 Route::resources([
     '/sugerencias' => SugerenciaController::class,
     'formularioVark' => FormularioVarkController::class,
+    '/empresas' => EmpresaController::class,
+    '/empresasUser' => UserEmpresaController::class
 ]);
 
 // Route::get('/sugerencias', [SugerenciaController::class, 'create'])->name("sugerencias.create");

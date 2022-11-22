@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 
 use App\Exports\SugerenciasExport;
 use App\Http\Requests\SugerenciaRequest;
+use App\Models\User;
+use App\Models\userEmpresa;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SugerenciaController extends Controller
@@ -30,8 +32,11 @@ class SugerenciaController extends Controller
      */
     public function create()
     {
-        //
-        return view("sugerencias.create");
+        //obtiene el id del usuario logueado
+        $userId = Auth()->user()->id;
+        //obtiene el id de la empresa del usuario actual
+        $empresa = userEmpresa::where('userId',$userId)->get()->first();
+        return view("sugerencias.create", compact("empresa"));
     }
 
     /**

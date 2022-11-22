@@ -9,6 +9,10 @@
 
     @include('modal.modal')
 
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     {{-- BOOSTRAP 5 --}}
     {{-- <link rel="stylesheet" href="{{ asset('lib/bootstrap5/css/bootstrap.min.css') }}"> --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
