@@ -10,6 +10,7 @@ use function PHPUnit\Framework\returnSelf;
 class sugerencia extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function empresa()
     {
