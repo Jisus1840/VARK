@@ -23,8 +23,8 @@
     {{-- swal alert libreria --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="{{ asset('js/app.js') }}" defer></script> -->
 
     {{-- ESTILOS PROPIOS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
