@@ -5661,10 +5661,6 @@
                 "laravel",
                 "routes"
             ],
-            "support": {
-                "issues": "https://github.com/tighten/ziggy/issues",
-                "source": "https://github.com/tighten/ziggy/tree/v1.5.0"
-            },
             "time": "2022-09-23T22:15:05+00:00"
         },
         {
@@ -8275,5 +8271,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "1.1.0"
 }

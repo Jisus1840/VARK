@@ -18,3 +18,18 @@
     </form>
 </div>
 @endsection
+
+
+
+@push("scripts")
+<script>
+    function mensajeSwal(message, icon, title) {
+        Swal.fire({
+            timer: 1500,
+            icon: icon,
+            title: title,
+            text: message,
+        });
+    }
+</script>
+@endpush

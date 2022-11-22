@@ -25,6 +25,7 @@
                 <td class="text-center">
                     <a href="{{ route("empresas.edit", $empresa->id) }}" class="text-center"><i class="fas fa-edit"></i></a>
                     <a onclick="eliminarEmpresa({{$empresa->id}})"><span><i class="fas fa-trash" style="color:#00225F"></i></a>
+                        <a href="{{ route("empresas.create") }}" class="text-center"><i class="fas fa-plus-circle"></i></a>
                 </td>
             </tr>
             @endforeach
@@ -37,6 +38,18 @@
 
 @push('scripts')
 <script>
+    window.CSRF_TOKEN = '{{ csrf_token() }}';
+</script>
+<script>
+    function mensajeSwal(message, icon, title) {
+    Swal.fire({
+        timer: 1500,
+        icon: icon,
+        title: title,
+        text: message,
+    });
+}
+
    async function eliminarEmpresa(id){
     event.preventDefault()
     let url = route('empresas.destroy',id)
@@ -44,7 +57,7 @@
     let init = {
         method: "DELETE",
         headers: {
-            "X-CSRF-TOKEN": $('#csrf').attr('content'),
+            "X-CSRF-TOKEN": window.CSRF_TOKEN,
             "Content-Type": "application/json",
             Accept: "application/json",
         }
@@ -52,7 +65,8 @@
 
     let req = await fetch(url,init)
     if(req.ok){
-        // mensajeSwal("Puesto Eliminado","success","success")
+        mensajeSwal("Empresa Eliminado","success","success")
+        location.reload()
         return;
     }
 
