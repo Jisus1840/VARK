@@ -25,6 +25,7 @@ class EmpresaController extends Controller
     public function create()
     {
         //
+        return view("empresas.create");
     }
 
     /**
@@ -35,7 +36,18 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'nombre_empresa' => 'required|min:3',
+            ]
+            );
+            
+            $empresa = empresa::create([
+                'nombre_empresa' => $request->nombre_empresa,
+            ]);
+
+            return response('Empresa Agregada Exitosamente',200);
     }
 
     /**
