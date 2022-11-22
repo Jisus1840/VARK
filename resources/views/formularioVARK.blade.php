@@ -13,7 +13,7 @@ Formulario VARK
 
     <div class="row mt-2">
         <div class="col-md-12 text-center">
-            <h1>Formulario VARK</h1>
+            <h1>Formulario VARK:</h1>
         </div>
     </div>
     <form id="formulario">
