@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\SugerenciaController;
 use App\Http\Controllers\UserEmpresaController;
@@ -21,6 +22,12 @@ use App\Http\Controllers\FormularioPersonalidadController;
 Route::get('/', function () {
     return view('formularioVARK');
 })->name('formularioVARK');
+// Route::get('/', function () {
+//     return view('login');
+// });
+
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
+->name('login');
 
 Route::get('contacto', function () {
     return view('contacto');
@@ -29,6 +36,10 @@ Route::get('contacto', function () {
 // Route::get('formularioPersonalidad', function () {
 //     return view('formularioPersonalidad');
 // })->name('formularioPersonalidad');
+
+Route::get('formularioVARK', function () {
+    return view('formularioVARK');
+})->name('formularioVARK');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -43,7 +54,7 @@ require __DIR__.'/auth.php';
 
 
 // ruta para exporta el excel de sugerencias
-Route::get('/sugerencias/export', [SugerenciaController::class, 'export']);
+Route::get('/sugerencias/export', [SugerenciaController::class, 'export'])->name('descargar.sugerencia');
 // ruta para el formulario de sugerencias
 
 Route::resources([

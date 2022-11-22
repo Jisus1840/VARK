@@ -47,7 +47,7 @@ class SugerenciasExport implements
     public function map($data): array
     {
         return [
-            $data->empresa->id,
+            $data->empresa->nombre_empresa,
             $data->mensaje,
             $data->created_at
         ];

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\empresa;
 use App\Models\userEmpresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserEmpresaController extends Controller
 {
@@ -15,6 +18,8 @@ class UserEmpresaController extends Controller
     public function index()
     {
         //
+        $empresa_usuario = userEmpresa::all();
+        return view("user_empresa.index", compact("empresa_usuario"));
     }
 
     /**
@@ -24,7 +29,9 @@ class UserEmpresaController extends Controller
      */
     public function create()
     {
-        //
+        $empresas = empresa::all();
+        $usuarios = User::where('isAdmin', 0)->get();
+        return view("user_empresa.create", compact("empresas", "usuarios"));
     }
 
     /**
@@ -36,6 +43,14 @@ class UserEmpresaController extends Controller
     public function store(Request $request)
     {
         //
+
+        request()->validate(['empresaId' => 'required', 'userId' => 'required']);
+
+        $userEmpresa = userEmpresa::create([
+            "empresaId" => $request->empresaId,
+            "userId" => $request->userId,
+        ]);
+        return response('Usuario Asignado Exitosamente', 200);
     }
 
     /**
@@ -55,9 +70,13 @@ class UserEmpresaController extends Controller
      * @param  \App\Models\userEmpresa  $userEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function edit(userEmpresa $userEmpresa)
+    public function edit(int $id)
     {
         //
+        $userEmpresa = userEmpresa::findOrFail($id);
+        $empresas = empresa::all();
+        $usuarios = User::where('isAdmin', 0)->get();
+        return view("user_empresa.edit", compact("userEmpresa", "empresas", "usuarios"));
     }
 
     /**
@@ -67,9 +86,19 @@ class UserEmpresaController extends Controller
      * @param  \App\Models\userEmpresa  $userEmpresa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, userEmpresa $userEmpresa)
+    public function update(Request $request, int $id)
     {
         //
+
+        request()->validate(['empresaId' => 'required', 'userId' => 'required']);
+
+        DB::table()
+            ->where('id', $id)
+            ->update(['empresaId' => $request->empresaId,'userId'=> $request->userId]);;
+        $userEmpresa = userEmpresa::create([
+            "empresaId" => $request->empresaId,
+            "userId" => $request->userId,
+        ]);
     }
 
     /**

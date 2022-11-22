@@ -41,12 +41,7 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(
-            $request,
-            [
-                'nombre_empresa' => 'required|min:3',
-            ]
-            );
+        request()->validate(['nombre_empresa' => 'required|min:3']);
             
             $empresa = empresa::create([
                 'nombre_empresa' => $request->nombre_empresa,
@@ -74,9 +69,7 @@ class EmpresaController extends Controller
      */
     public function edit(int $id)
     {
-        //
         $empresa = empresa::findOrFail($id);
-
         return view('empresas.edit', compact("empresa"));
     }
 
@@ -89,7 +82,9 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, int $id)
     {
-            DB::table('empresas')
+        request()->validate(['nombre_empresa' => 'required|min:3']);
+
+        DB::table('empresas')
             ->where('id', $id)
             ->update(['nombre_empresa' => $request->nombre_empresa]);
         return redirect()->back()->with(["mensaje"=>"actualizado con exito"]);
@@ -103,7 +98,6 @@ class EmpresaController extends Controller
      */
     public function destroy(int $id)
     {
-        empresa::findOrFail($id)->delete();
-        return redirect()->back()->with(["mensaje"=>"eliminado con exito"]);
+        $empresa = empresa::findOrFail($id)->delete();
     }
 }

@@ -12,9 +12,23 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('empresas.index')" :active="request()->routeIs('empresas.index')">
+                        {{ __('Empresas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('empresasUser.index')" :active="request()->routeIs('empresasUser.index')">
+                        {{ __('Asignar Empresa') }}
+                    </x-nav-link>
+
+                    @if(Auth()->user()->isAdmin == 1)
+                    <x-nav-link :href="route('descargar.sugerencia')" :active="request()->routeIs('descargar.sugerencia')">
+                        {{ __('descargar suguerencias') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -65,6 +79,18 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('empresas.index')" :active="request()->routeIs('empresas.index')">
+                {{ __('Empresas') }}
+            </x-responsive-nav-link>
+            @if(Auth()->user()->isAdmin == 1)
+            <x-responsive-nav-link :href="route('empresasUser.index')" :active="request()->routeIs('empresasUser.index')">
+                {{ __('Asignar Empresa') }}
+            </x-responsive-nav-link>
+            @endif
+            <x-responsive-nav-link :href="route('descargar.sugerencia')" :active="request()->routeIs('descargar.sugerencia')">
+                {{ __('descargar sugerencias') }}
             </x-responsive-nav-link>
         </div>
 

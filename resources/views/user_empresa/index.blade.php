@@ -1,31 +1,31 @@
 @extends('layouts.base_html')
 
 @section('title')
-    Empresa
+    Empresa-usuarios
 @endsection
 
 @section('content')
 @include('layouts.navigation')
 <div class="container shadow-lg p-2 mb-5 mt-1 bg-body rounded ">
-    <h2 style="text-align:center" class="p-3 fondo">Empresas</h2>
+    <h2 style="text-align:center" class="p-3 fondo">Empresas usuarios</h2>
 
     <table id="tabla" class="table table-striped mt-5 mb-3" style="width:100%">
         <thead>
             <tr>
                 <th class="text-center">Empresa</th>
-                <th class="text-center">Fecha de creacion</th>
+                <th class="text-center">Usuario</th>
                 <th class="text-center">Acciones </th>
             </tr>
         </thead>
         <tbody>
-            @foreach($empresas as $empresa)
+            @foreach($empresa_usuario as $dato)
             <tr>
-                <td class="text-center">{{ $empresa->nombre_empresa }}</td>
-                <td class="text-center">{{ $empresa->created_at }}</td>
+                <td class="text-center">{{ $dato->empresa->nombre_empresa }}</td>
+                <td class="text-center">{{ $dato->user->name }}</td>
                 <td class="text-center">
-                    <a href="{{ route("empresas.edit", $empresa->id) }}" class="text-center"><i class="fas fa-edit"></i></a>
-                    <a onclick="eliminarEmpresa({{$empresa->id}})"><span><i class="fas fa-trash" style="color:#00225F"></i></a>
-                        <a href="{{ route("empresas.create") }}" class="text-center"><i class="fas fa-plus-circle"></i></a>
+                    <a href="{{ route("empresasUser.edit", $dato->id) }}" class="text-center"><i class="fas fa-edit"></i></a>
+                    <a onclick="eliminarEmpresa({{$dato->id}})"><span><i class="fas fa-trash" style="color:#00225F"></i></a>
+                        <a href="{{ route("empresasUser.create") }}" class="text-center"><i class="fas fa-plus-circle"></i></a>
                 </td>
             </tr>
             @endforeach
