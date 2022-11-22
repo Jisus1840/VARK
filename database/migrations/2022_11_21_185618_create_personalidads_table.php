@@ -13,8 +13,11 @@ class CreatePersonalidadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('personalidads', function (Blueprint $table) {
+        Schema::create('personalidades', function (Blueprint $table) {
             $table->id();
+            $table->string('respuesta');
+            $table->integer('cantidad');
+            $table->foreignId('userId')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreatePersonalidadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personalidads');
+        Schema::dropIfExists('personalidades');
     }
 }
