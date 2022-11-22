@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('formularioVARK');
 });
 
+Route::get('contacto', function () {
+    return view('contacto');
+})->name('contacto');
+
 Route::get('formularioPersonalidad', function () {
     return view('formularioPersonalidad');
 })->name('formularioPersonalidad');
