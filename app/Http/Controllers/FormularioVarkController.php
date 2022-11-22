@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FormularioVark;
 use Illuminate\Http\Request;
+use App\Models\FormularioVark;
+use App\Http\Requests\FormularioVarkRequest;
 
 class FormularioVarkController extends Controller
 {
@@ -35,7 +36,22 @@ class FormularioVarkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $arreglo = collect([
+            'V' => 0,
+            'A' => 0,
+            'R' => 0,
+            'K' => 0,
+        ]);
+        // var_dump());
+        // die;
+        foreach ($request->except('_token') as $respuesta) {
+            $arreglo[$respuesta] += 1;
+        }
+        $a = $arreglo->sortDesc()->keys()->first();
+        // dd($a);
+        // $validated = $request->validated();
+        $formularioVark = FormularioVark::create(['folio' => '0001' ,'respuesta' => $a, 'userId' => '1']);
+        return response()->json($formularioVark);
     }
 
     /**

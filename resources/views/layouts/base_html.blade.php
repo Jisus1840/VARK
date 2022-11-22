@@ -18,6 +18,8 @@
     {{-- DATATABLES --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
+    @routes
+
     {{-- directiva para las rutas de ziggy --}}
     {{-- @routes --}}
     {{-- swal alert libreria --}}

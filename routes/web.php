@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FormularioVarkController;
 use App\Http\Controllers\SugerenciaController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,7 @@ Route::get('/sugerencias/export', [SugerenciaController::class, 'export']);
 
 Route::resources([
     '/sugerencias' => SugerenciaController::class,
+    'formularioVark' => FormularioVarkController::class,
 ]);
 
 // Route::get('/sugerencias', [SugerenciaController::class, 'create'])->name("sugerencias.create");
