@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('formularioVARK');
+    return view('welcome');
 });
 
 Route::get('contacto', function () {
@@ -28,6 +28,10 @@ Route::get('contacto', function () {
 Route::get('formularioPersonalidad', function () {
     return view('formularioPersonalidad');
 })->name('formularioPersonalidad');
+
+Route::get('formularioVARK', function () {
+    return view('formularioVARK');
+})->name('formularioVARK');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
