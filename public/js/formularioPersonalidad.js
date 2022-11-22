@@ -1,5 +1,5 @@
 
-const formulario1 = () => {
+function formulario1() {
     let ext1 = document.getElementById('ext1').value;
     let int1 = document.getElementById('int1');
     let ext2 = document.getElementById('ext2').value;
@@ -35,9 +35,15 @@ const formulario1 = () => {
     int9.value = 10 - ext9
 
     int10.value = 90 - totalExtrovertido;
+
+    if (totalExtrovertido >= 45) {
+        return 'E'
+    }
+
+    return 'I';
 }
 
-const formulario2 = () => {
+function formulario2() {
     let sen1 = document.getElementById('sen1').value;
     let intu1 = document.getElementById('intu1');
     let sen2 = document.getElementById('sen2').value;
@@ -73,9 +79,15 @@ const formulario2 = () => {
     intu9.value = 10 - sen9
 
     intu10.value = 90 - totalSensorial;
+
+    if (totalSensorial >= 45) {
+        return 'S'
+    }
+
+    return 'N';
 }
 
-const formulario3 = () => {
+function formulario3() {
     let rac1 = document.getElementById('rac1').value;
     let emo1 = document.getElementById('emo1');
     let rac2 = document.getElementById('rac2').value;
@@ -111,9 +123,15 @@ const formulario3 = () => {
     emo9.value = 10 - rac9
 
     emo10.value = 90 - totalRacional;
+
+    if (totalRacional >= 45) {
+        return 'T'
+    }
+
+    return 'F';
 }
 
-const formulario4 = () => {
+function formulario4() {
     let cal1 = document.getElementById('cal1').value;
     let per1 = document.getElementById('per1');
     let cal2 = document.getElementById('cal2').value;
@@ -149,4 +167,403 @@ const formulario4 = () => {
     per9.value = 10 - cal9
 
     per10.value = 90 - totalCalificador;
+
+    if (totalCalificador >= 45) {
+        return 'J'
+    }
+
+    return 'P';
+}
+
+
+
+async function resultado() {
+    f1 = formulario1();
+    f2 = formulario2();
+    f3 = formulario3();
+    f4 = formulario4();
+
+    // URL
+    const url = route("formularioPersonalidad.store");
+
+
+    // FormData
+    const formData = new FormData();
+
+    formData.append('resultado', f1 + f2 + f3 + f4);
+
+    // Init
+    const init = {
+        method: "POST",
+        body: formData,
+        headers: {
+            Accept: "application/json",
+            'X-CSRF-TOKEN': document.querySelector('[name="_token"]').value,
+        }
+    }
+
+    // req
+    const req = await fetch(url, init)
+
+    if (req.ok) {
+        const res = await req.json()
+        console.log(res);
+        // Construccion del modal
+        let modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+        modal.toggle();
+        document.getElementById(
+            "exampleModalLabel"
+        ).innerHTML = `Información de la persona`;
+        document.getElementById("modalSize").classList.add("modal-lg");
+        document.getElementById("exampleModalLabel").style = "color: white";
+
+        if (res.resultado == 'ISFJ') {
+            document.getElementById("modal-body").innerHTML = `
+                 <div class="row">
+                    <div class="mb-3 col-md-12">
+                    <h1>${res.resultado}</h1>
+                    <h3>Peligros potenciales:</h3>
+                        <ul>
+                            <li>Pueden ser algo pesimistas acerca del futuro.</li>
+                            <li>Pueden ser considerados insuficientemente sólidos cuando someten sus puntos de vista a otros.</li>
+                            <li>Pueden ser subvalorados por su estilo tranquilo y algo retraido.</li>
+                            <li>Pueden no ser tan flexibles como la situación u otros requieran.</li>
+                        </ul>
+                    <h3>Sugerencias para el desarrollo:</h3>
+                        <ul>
+                            <li>Deben aprender a divulgar y llamar más la atención hacia sus propios logros.</li>
+                            <li>Deben tratar de evitar cierta suspicacia hacia su propia intuición o imaginación y tomarlas más en serio.</li>
+                        </ul>
+                    </div>
+                </div>
+                 `;
+        }
+        if (res.resultado == 'ISFP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                                <li>Pueden ser demasiado confiados y credulos. </li>
+                                <li>Pueden no criticar a otros cuando es necesario.</li>
+                                <li>Pueden ser heridos con facilidad y hasta retirarse.</li>
+                                <li>Pueden sentir un contraste tal entre sus elevados ideales internos y sus realizaciones reales, que asuman un cierto sentido de inadecuación.
+                                aún cuando estén siendo efectivos como los demás</li>
+                            </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                                <li>Deben desarrollar mas escepticismo y un metodo para analizar la informaci6n en lugar de simplemente aceptarla como buena</li>
+                                <li>Deben elevar el aprecio a sus propios logros.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ISTJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                                <li>Pueden tener problemas si esperan que todo el mundo sea tan lógico y analitico como ellos. </li>
+                                <li>Pueden ignorar las implicaciones de largo alcance por priorizar operaciones de carácter cotidiano.</li>
+                                <li>Pueden discutir las relaciones interpersonales.</li>
+                                <li>Pueden tornarse rígidos en su comportamiento y ser considerados inflexibles.</li>
+                            </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                                <li>Deben prestar atención tambien a las mas amplias ramificaciones de problemas, ademas de a las realidades presentes</li>
+                                <li>Deben probar alternativas frescas para evitar lo tradicionales utilizado.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ISTP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden guardarse cosas importantes para si y parecer no estar preocupados.</li>
+                            <li>Pueden seguir adelante con el trabajo, antes de esperar que el esfuerzo previo rinda los frutos necesarios.</li>
+                            <li>Pueden parecer indecisos y no dirigidos.</li>
+                            </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Pueden necesitar abrirse y compartir preocupaciones e informaci6n con otras personas.</li>
+                            <li>Pueden necesitar desarrollar perseverancia.</li>
+                            <li>Pueden necesitar planificar y dedicar el esfuerzo necesario para lograr los resultados deseados.</li>
+                            <li>Pueden necesitar desarrollar el habito de fijarse metas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'INFJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden creer, aunque no sea realidad, que sus ideas son pasadas por alto y/o subestimadas.</li>
+                            <li>Pueden no ser francos y directos con la critica.</li>
+                            <li>Pueden ser reacios a inmiscuirse en la vida de otros y, por lo tanto, mantenerse demasiado para si.</li>
+                            <li>Pueden operar con concentración en un solo asunto, ignorando otras tareas que necesitan ser realizadas.</li>
+                            </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Pueden necesitar desarrollar habilidades politicas e impositivas para luchar por sus ideales.</li>
+                            <li>Pueden necesilar aprender a dar retroalimentaci6n constructiva a otros oportunamente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'INFP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden demorar la terminaci6n de !areas debido al perfeccionismo.</li>
+                            <li>Pueden tratar de agradar a demasiada gente al mismo tiempo.</li>
+                            <li>Pueden dedicar mas tiempo a la reflexion que a la acción</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben desarrollar mas dureza y disposición a decir que no.</li>
+                            <li>Deben desarrollar la capacidad para trabajar con la realidad mas que buscar la respuesta perfecta</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'INTJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden parecer tan inflexibles que otros teman acercarseles o discrepar.</li>
+                            <li>Pueden tener dificultades en deshacerse de ideas impracticables.</li>
+                            <li>Pueden ignorar el impacto de sus ideas o estilo sabre otros.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                                <li>Deben esforzarse por oir las ideas de otros.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'INTP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden parecer tan inflexibles que otros teman acerseles o discrepar.</li>
+                            <li>Pueden temer dificultades en deshacerse de ideas impractibles.</li>
+                            <li>Pueden ignorar el impacto de sus ideas o estilo sobre otros.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben concentrarse en detalles practices y desarrollar el seguimiento, asi como hacer esfuerzos para expresar las cosas de manera mas simple.</li>
+                            <li>Deben esforzarse por co·nocer los aspectos personales y profesionales de los restantes integrantes del grupo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ESFJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden ocultar algun problema par evitar un conflicto.</li>
+                            <li>Pueden no valorar suficientemente sus propias prioridades debido a su deseo de agradar a los demas.</li>
+                            <li>Pueden no siempre detenerse y ver el cuadro complete.</li>
+                            <li>Pueden asurnir, sin suficientes elementos, lo que es mejor para otros o para la organización</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben incluir sus propias necesidades.</li>
+                            <li>Deben escuchar bien lo que los otros realmente necesitan o quieren.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ESFP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden sobre-enfatizar informaci6n no objetiva.</li>
+                            <li>Pueden no reflexionar antes de "lanzarse".</li>
+                            <li>Pueden invertir demasiado tiempo a ser sociables y descuidar alguna tarea.</li>
+                            <li>Puede que no tenninen siempre lo que empiezan.
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Pueden necesitar incluir implicaciones 16gicas en su toma de decisiones.</li>
+                            <li>Pueden necesitar planificar previamente cuando administran proyecto .</li>
+                            <li>Pueden necesitar balancear el esfuerzo por las tareas con el trato social.</li>
+                            <li>Pueden necesitar trabajar en una mejor administraci6n del tiempo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ESTJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden ser sorprendidos por sus sentimientos y valores si los ignora durante mucho t1empo.</li>
+                            <li>Pueden decidir demasiado rapidamente.</li>
+        |                   <li>Pueden no ver la necesidad de cambio.</li>
+                            <li>Pueden pasar par alto las sutilezas al tratar de que se haga el trabaja.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben considerar todos las aspectos, incluyendo el elemento humano, antes de decidir.</li>
+                            <li>Deben esforzarse para ver las beneficios del cambio.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ESTP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden parecer bruscos, e inclusa insensibles, cuando actuan rapidamente.</li>
+                            <li>Pueden descansar demasiado en la improvisaci6n y perder de vista las implicacianes mas amplias de sus acciones.</li>
+                            <li>Pueden sacrificar el seguimiento de cualquier situaci6n ante el siguiente problema inmediato.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben dominar su excesiva confianza e incluir los sentimientos de atras personas en sus analisis.</li>
+                            <li>Deben tratar de ver mas alla de lo inmediato y planificar con antelación.</li>
+                            <li>Deben desarrallar mas su perseverancia.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ENFJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden idealizar a otros y sufrir de "lealtad ciega".</li>
+                            <li>Pueden barrer losproblemas debajo de la alfombra" cuando estan en conflicto.</li>
+                            <li>Puede no priorizar las tareas a favor de cuestiones de relaciones humanas.</li>
+                            <li>Puede interpretar la critica de forma personal.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben hacer un esfuerzo especial para admitir las limitaciones de la gente que quiere.</li>
+                            <li>Pueden necesitar aprender a manejar los conflictos en forma productiva.</li>
+                            <li>Pueden requerir prestar igual atenci6n a las detalles de la tarea tanto coma a los de la gente.</li>
+                            <li>Pueden necesitar detener el analisis autocritico subjetivo y escuchar cuidadosamente la informaci6n objetiva contenido en la retroalimentación</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ENFP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden pasar a nuevas ideas y proyectos sin completar los ya iniciados.</li>
+                            <li>Pueden pasar por alto detalles importantes.</li>
+                            <li>Pueden tratar de abarcar demasiado. Pueden dernorarse.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben fijar prioridades y dar seguimiento completo a los asuntos.</li>
+                            <li>Deben buscar detalles importantes.</li>
+                            <li>Deben seleccionar proyectos en lugar de tratar de hacer todo lo que sea inicialmente atractivo</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ENTJ') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden ignorar las necesidades de la gente al enfocar la !area.</li>
+                            <li>Pueden ignorar las consideraciones y limitantes practicas.</li>
+                            <li>Pueden decidir demasiado rapidamente y aparecer impacientes y prepotentes.</li>
+                            <li>Pueden ignorar y reprimir sus propios sentimientos.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben esforzarse por incluir el elemento humano y apreciar las cantribuciones de otros.</li>
+                            <li>Deben chequear los recurses praclicos, personales y situacionales disponibles, antes de seguir adelante.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        if (res.resultado == 'ENTP') {
+            document.getElementById("modal-body").innerHTML = `
+                     <div class="row">
+                        <div class="mb-3 col-md-12">
+                        <h1>${res.resultado}</h1>
+                        <h3>Peligros potenciales:</h3>
+                            <ul>
+                            <li>Pueden "perderse" en el modelo, olvidando las realidades presentes. Pueden ser competitivos y no apreciar la contribución de otros.</li>
+                            <li>Pueden sobre-extenderse.</li>
+                            <li>Pueden no adaptarse bien a los procedimientos establecidos.</li>
+                        </ul>
+                        <h3>Sugerencias para el desarrollo:</h3>
+                            <ul>
+                            <li>Deben prestar atención a la realidad presente.</li>
+                            <li>Deben esforzarse par reconocer y validar la contribución de otros.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     `;
+        }
+        modal.handleUpdate();
+
+
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Advertencia',
+            text: 'Favor de llenar todos los campos'
+        });
+    }
+
+    // return f1 + f2 + f3 + f4;
 }

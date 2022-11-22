@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\FormularioVarkController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\SugerenciaController;
 use App\Http\Controllers\UserEmpresaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FormularioVarkController;
+use App\Http\Controllers\FormularioPersonalidadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +20,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('formularioVARK');
-});
+})->name('formularioVARK');
 
 Route::get('contacto', function () {
     return view('contacto');
 })->name('contacto');
 
-Route::get('formularioPersonalidad', function () {
-    return view('formularioPersonalidad');
-})->name('formularioPersonalidad');
+// Route::get('formularioPersonalidad', function () {
+//     return view('formularioPersonalidad');
+// })->name('formularioPersonalidad');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -49,7 +50,8 @@ Route::resources([
     '/sugerencias' => SugerenciaController::class,
     'formularioVark' => FormularioVarkController::class,
     '/empresas' => EmpresaController::class,
-    '/empresasUser' => UserEmpresaController::class
+    '/empresasUser' => UserEmpresaController::class,
+    'formularioPersonalidad' => FormularioPersonalidadController::class,
 ]);
 
 // Route::get('/sugerencias', [SugerenciaController::class, 'create'])->name("sugerencias.create");

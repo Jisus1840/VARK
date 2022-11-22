@@ -15,7 +15,6 @@ class CreateVarksTable extends Migration
     {
         Schema::create('varks', function (Blueprint $table) {
             $table->id();
-            $table->string('folio');
             $table->string('respuesta');
             $table->foreignId('userId')->references('id')->on('users');
             $table->timestamps();
