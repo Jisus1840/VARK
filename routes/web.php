@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\FormularioVarkController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\SugerenciaController;
@@ -17,9 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
+
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
+->name('login');
 
 Route::get('contacto', function () {
     return view('contacto');
