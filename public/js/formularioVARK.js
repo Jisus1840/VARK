@@ -5,11 +5,6 @@ document.getElementById("enviar_formulario").onclick = async () => {
     // Form
     const form = document.getElementById("formulario");
 
-    // ob = {
-    //     1: document.getElementById("")
-    // }
-
-
     // FormData
     const formData = new FormData(form);
 
@@ -27,11 +22,55 @@ document.getElementById("enviar_formulario").onclick = async () => {
     const req = await fetch(url, init)
 
     if (req.ok) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Exito',
-            text: 'Formulario completado exitosamente'
-        });
+        const res = await req.json()
+        if (res.respuesta == 'V') {
+            Swal.fire({
+                title: 'Exito!',
+                text: 'Tu personalidad es VISUAL',
+                imageUrl: '../public/img/VISUAL.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            });
+            form.reset();
+            return;
+        }
+        if (res.respuesta == 'A') {
+            Swal.fire({
+                title: 'Exito!',
+                text: 'Tu personalidad es AUDITIVO',
+                imageUrl: '../public/img/AUDITIVO.png',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+            form.reset();
+            return;
+        }
+        if (res.respuesta == 'R') {
+            Swal.fire({
+                title: 'Exito!',
+                text: 'Tu personalidad es LECTOR',
+                imageUrl: '../public/img/LECTOR.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+            form.reset();
+            return;
+        }
+        if (res.respuesta == 'K') {
+            Swal.fire({
+                title: 'Exito!',
+                text: 'Tu personalidad es KINESTESICO',
+                imageUrl: '../public/img/KINESTESICO.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+            form.reset();
+            return;
+        }
     } else {
         Swal.fire({
             icon: 'error',

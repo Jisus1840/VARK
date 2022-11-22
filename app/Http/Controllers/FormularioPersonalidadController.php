@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FormularioPersonalidad;
 use Illuminate\Http\Request;
-use App\Models\FormularioVark;
-use App\Http\Requests\FormularioVarkRequest;
 
-class FormularioVarkController extends Controller
+class FormularioPersonalidadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class FormularioVarkController extends Controller
      */
     public function index()
     {
-        //
+        return view('formularioPersonalidad');
     }
 
     /**
@@ -36,31 +35,20 @@ class FormularioVarkController extends Controller
      */
     public function store(Request $request)
     {
-        $arreglo = collect([
-            'V' => 0,
-            'A' => 0,
-            'R' => 0,
-            'K' => 0,
-        ]);
-        // var_dump());
-        // die;
-        foreach ($request->except('_token') as $respuesta) {
-            $arreglo[$respuesta] += 1;
-        }
-        $a = $arreglo->sortDesc()->keys()->first();
-        // dd($a);
-        // $validated = $request->validated();
-        $formularioVark = FormularioVark::create(['respuesta' => $a, 'userId' => '1']);
-        return response()->json($formularioVark);
+        $validar = $request->validate(['resultado' => ['regex:/(E|I)(S|N)(T|F)(J|P)/']]);
+        $validar['userId'] = 1;
+        // dd($validar);
+        FormularioPersonalidad::create($validar);
+        return response()->json($validar);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FormularioVark  $formularioVark
+     * @param  \App\Models\FormularioPersonalidad  $formularioPersonalidad
      * @return \Illuminate\Http\Response
      */
-    public function show(FormularioVark $formularioVark)
+    public function show(FormularioPersonalidad $formularioPersonalidad)
     {
         //
     }
@@ -68,10 +56,10 @@ class FormularioVarkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FormularioVark  $formularioVark
+     * @param  \App\Models\FormularioPersonalidad  $formularioPersonalidad
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormularioVark $formularioVark)
+    public function edit(FormularioPersonalidad $formularioPersonalidad)
     {
         //
     }
@@ -80,10 +68,10 @@ class FormularioVarkController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FormularioVark  $formularioVark
+     * @param  \App\Models\FormularioPersonalidad  $formularioPersonalidad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FormularioVark $formularioVark)
+    public function update(Request $request, FormularioPersonalidad $formularioPersonalidad)
     {
         //
     }
@@ -91,10 +79,10 @@ class FormularioVarkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FormularioVark  $formularioVark
+     * @param  \App\Models\FormularioPersonalidad  $formularioPersonalidad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FormularioVark $formularioVark)
+    public function destroy(FormularioPersonalidad $formularioPersonalidad)
     {
         //
     }

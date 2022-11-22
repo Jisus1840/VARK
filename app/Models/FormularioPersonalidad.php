@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FormularioVark extends Model
+class FormularioPersonalidad extends Model
 {
     use HasFactory;
-    protected $table = "varks";
-    protected $primary = "id";
+    protected $table = 'personalidades';
+    protected $primary = 'id';
     protected $fillable = [
-        'respuesta',
+        'resultado',
         'userId'
     ];
 }

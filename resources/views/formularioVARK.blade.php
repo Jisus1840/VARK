@@ -7,6 +7,7 @@
 
 @section('content')
     {{-- Contenido --}}
+    @include('navbar')
     <div class="container mt-3">
         <div class="row mt-2">
             <div class="col-md-12 text-center">

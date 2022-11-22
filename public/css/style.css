@@ -1,10 +1,10 @@
-/* body {
+body {
     background: rgb(42, 0, 255);
     background: linear-gradient(90deg, rgba(42, 0, 255, 1) 0%, rgba(220, 223, 236, 1) 100%);
     overflow-x: hidden;
     transition: 3s;
 
-} */
+}
 
 html {
     overflow-x: hidden;

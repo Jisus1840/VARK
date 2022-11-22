@@ -15,8 +15,7 @@ class CreatePersonalidadsTable extends Migration
     {
         Schema::create('personalidades', function (Blueprint $table) {
             $table->id();
-            $table->string('respuesta');
-            $table->integer('cantidad');
+            $table->string('resultado', 4);
             $table->foreignId('userId')->references('id')->on('users');
             $table->timestamps();
         });
