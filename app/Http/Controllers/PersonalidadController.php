@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\personalidad;
+use App\Models\vark;
 use Illuminate\Http\Request;
 
 class PersonalidadController extends Controller
@@ -81,5 +82,23 @@ class PersonalidadController extends Controller
     public function destroy(personalidad $personalidad)
     {
         //
+    }
+
+    public function myersBriggsGraph() {
+        $data = personalidad::join('users', 'users.id', '=', 'personalidades.userId')->selectRaw('personalidades.respuesta, count(*) as total')->groupBy('personalidades.respuesta')->get();
+
+        $labels = $data->pluck('respuesta');
+        $total = $data->pluck('total');
+
+        return response()->json([$labels, $total]);
+    }
+
+    public function graph() {
+        $vark = vark::count();
+        $personalidad = personalidad::count();
+        $labels = ['VARK', 'Personalidad'];
+        $data = [$vark, $personalidad];
+
+        return response()->json([$labels, $data]);
     }
 }

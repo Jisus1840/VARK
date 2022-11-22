@@ -23,6 +23,8 @@
 
     @routes
 
+    <script src="{{ asset('lib/chart.js') }}"></script>
+
     {{-- directiva para las rutas de ziggy --}}
     {{-- @routes --}}
     {{-- swal alert libreria --}}
