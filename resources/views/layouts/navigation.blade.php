@@ -29,7 +29,7 @@
                         {{ __('Tests de VARK') }}
                     </x-nav-link>
                     <x-nav-link :href="route('formularioPersonalidad.index')" :active="request()->routeIs('formularioPersonalidad.index')">
-                        {{ __('Test de Personalidad') }}
+                        {{ __('Test de personalidad') }}
                     </x-nav-link>
 
                     @if(Auth()->user()->isAdmin == 1)

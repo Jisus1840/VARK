@@ -30,6 +30,10 @@ Route::get('formularioPersonalidad', function () {
     return view('formularioPersonalidad');
 })->name('formularioPersonalidad');
 
+Route::get('formularioVARK', function () {
+    return view('formularioVARK');
+})->name('formularioVARK');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
